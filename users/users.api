@@ -1,0 +1,31 @@
+info(
+	title: "users api"
+)
+
+type WechatAuthRequest {
+	JsCode    string `json:"jscode"`
+	AvatarUrl string `json:"avatar_url"`
+	Nickname  string `json:"nickname"`
+}
+
+type ResponseStatus {
+	Code int    `json:"code"`
+	Msg  string `json:"msg,optional"`
+}
+
+type User {
+	UserId    int    `json:"user_id"`
+	Nickname  string `json:"nickname"`
+	AvatarUrl string `json:"avatar_url"`
+}
+
+type WechatAuthResponse {
+	Status   ResponseStatus `json:"status"`
+	Data     User           `json:"user,optional"`
+	AuthCode string         `json:"auth_code"`
+}
+
+service users-api {
+	@handler WechatAuthHandler
+	post /users/wechat/auth (WechatAuthRequest) returns (WechatAuthResponse)
+}
